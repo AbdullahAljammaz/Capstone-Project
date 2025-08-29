@@ -33,10 +33,16 @@ class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard']
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file:
     image = Image.open(uploaded_file)
+    
+    # Display original size
+    st.write("Original image size (width, height):", image.size)
+    
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # Preprocess image (resize & normalize)
+    # Resize and normalize
     img_array = np.array(image.resize((224, 224)))
+    st.write("Resized image shape:", img_array.shape)
+    
     img_array = np.expand_dims(img_array, axis=0) / 255.0
 
     # Run prediction
