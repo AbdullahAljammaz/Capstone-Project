@@ -1,29 +1,42 @@
 
 import streamlit as st
 import tensorflow as tf
+import os
+import gdown
+from PIL import Image
 import numpy as np
-from PIL import Image, ImageDraw
 
 st.title("Classroom Classification AI Web App")
-st.write("Upload a classroom image to detect and classify objects.")
 
-# Load your trained TensorFlow model
-model = tf.keras.models.load_model("models/my_custom_cnn.h5")
+# Path to save/load the model
+model_path = "models/my_custom_cnn.h5"
 
+# Put your direct Google Drive link here
+gdrive_url = "https://drive.google.com/uc?id=1OzRiSRs-k0L8B1dro4JyW5rjPv7Zzlnp"
+
+# Create models folder if it doesn't exist
+os.makedirs("models", exist_ok=True)
+
+# Download model if not exists
+if not os.path.exists(model_path):
+    st.info("Downloading model, please wait...")
+    gdown.download(gdrive_url, model_path, quiet=False)
+    st.success("Model downloaded!")
+
+# Load the model
+model = tf.keras.models.load_model(model_path)
+st.success("Model loaded successfully!")
+
+# Upload image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file:
-    # Open image
     image = Image.open(uploaded_file)
     st.image(image, caption='Uploaded Image', use_column_width=True)
-    
-    # Preprocess image for your model
-    img_array = np.array(image.resize((224, 224)))  # adjust size to your model input
+
+    # Preprocess image (adjust size for your model)
+    img_array = np.array(image.resize((224, 224)))
     img_array = np.expand_dims(img_array, axis=0) / 255.0
-    
-    # Run detection
+
+    # Run prediction
     predictions = model.predict(img_array)
-    
-    # For demonstration, just show raw predictions
     st.write("Model predictions:", predictions)
-    
-    # TODO: Add code to draw bounding boxes if your model outputs them
