@@ -1,0 +1,7 @@
+# Classroom Dataset
+
+This dataset contains images used for training the Classroom Classification AI model.
+
+Full dataset (6 folders, 400 images each) is too large to include in this repository.  
+
+You can download it here: [Google Drive Link](https://drive.google.com/drive/folders/13rsXfVpP7JQwQ8wLIzb8ce8sQ1TZqbPp?usp=share_link)
