@@ -1,4 +1,3 @@
-
 import streamlit as st
 import tensorflow as tf
 import os
@@ -45,4 +44,5 @@ if uploaded_file:
     pred_index = np.argmax(prediction[0])
     pred_name = class_names[pred_index]
 
-    st.write("Predicted class:", pred_name)
+    # Display predicted class only (no numbers)
+    st.success(f"Predicted class: {pred_name}")
