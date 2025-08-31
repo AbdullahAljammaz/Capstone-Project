@@ -10,7 +10,7 @@ st.title("Classroom Classification AI Web App")
 # Path to save/load the model
 model_path = "models/my_custom_cnn.h5"
 
-# Google Drive direct download link 
+# Google Drive direct download link
 gdrive_url = "https://drive.google.com/uc?id=1OzRiSRs-k0L8B1dro4JyW5rjPv7Zzlnp"
 
 # Create models folder if it doesn't exist
@@ -26,8 +26,8 @@ if not os.path.exists(model_path):
 model = tf.keras.models.load_model(model_path)
 st.success("Model loaded successfully!")
 
-# Class names in correct order
-class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard']
+# ✅ Make sure this matches exactly train_ds.class_names
+class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
 
 # Upload image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
@@ -35,8 +35,8 @@ if uploaded_file:
     image = Image.open(uploaded_file).convert('RGB')
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # Preprocess image
-    img_array = np.array(image.resize((224, 224)), dtype=np.float32) / 255.0
+    # ✅ Preprocess image (no manual scaling here)
+    img_array = np.array(image.resize((224, 224)), dtype=np.float32)
     img_array = np.expand_dims(img_array, axis=0)  # shape: (1,224,224,3)
 
     # Run prediction
