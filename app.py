@@ -4,22 +4,22 @@ import os
 import gdown
 from PIL import Image
 import numpy as np
-from tensorflow.keras.layers import Rescaling
 
 # ===========================
-# Foggy / translucent background
+# Set background image
 # ===========================
-def set_foggy_background(color="white", opacity=0.6):
+def set_background_image(image_path):
     st.markdown(
         f"""
         <style>
-        /* app background color */
         .stApp {{
-            background-color: {color};
+            background-image: url("{image_path}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }}
-        /* main panel foggy effect */
         .stApp .main {{
-            background-color: rgba(255, 255, 255, {opacity});
+            background-color: rgba(255, 255, 255, 0.6);  /* semi-transparent overlay */
             padding: 20px;
             border-radius: 15px;
         }}
@@ -28,7 +28,8 @@ def set_foggy_background(color="white", opacity=0.6):
         unsafe_allow_html=True
     )
 
-set_foggy_background(color="white", opacity=0.6)
+# Use your image file in the repo
+set_background_image("classroom.jpg")
 
 # ===========================
 # App title
@@ -73,7 +74,7 @@ selected_model_name = st.sidebar.selectbox("Choose a model", list(loaded_models.
 model_to_use = loaded_models[selected_model_name]
 
 # ===========================
-# Class names (adjust if different per model)
+# Class names (adjust if needed)
 # ===========================
 class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
 
