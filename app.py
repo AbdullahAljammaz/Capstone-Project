@@ -5,30 +5,29 @@ import gdown
 from PIL import Image
 import numpy as np
 from tensorflow.keras.layers import Rescaling
-import base64
 
 # ===========================
-# Background image function
+# Set plain background color
 # ===========================
-def set_background(image_file):
-    with open(image_file, "rb") as f:
-        encoded = base64.b64encode(f.read()).decode()
+def set_background_color(color="#f0f0f0"):  # Change hex code to any color
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-color: {color};
+        }}
+        .stApp .main {{
+            background-color: rgba(255, 255, 255, 0.85);  /* semi-transparent panel */
+            padding: 20px;
+            border-radius: 15px;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Add background (replace with your image in repo)
-set_background("calssroom.jpg")  # <- image in the same folder as app.py
+# Set the background color (example: light blue)
+set_background_color("#d0f0ff")
 
 # ===========================
 # App title
@@ -57,13 +56,15 @@ st.success("Model loaded successfully!")
 # ✅ Make sure this matches exactly train_ds.class_names
 class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
 
-# Upload image
+# ===========================
+# Image uploader and prediction
+# ===========================
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file:
     image = Image.open(uploaded_file).convert('RGB')
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # ✅ Preprocess image (no manual scaling here)
+    # Preprocess image
     img_array = np.array(image.resize((224, 224)), dtype=np.float32)
     img_array = np.expand_dims(img_array, axis=0)  # shape: (1,224,224,3)
 
