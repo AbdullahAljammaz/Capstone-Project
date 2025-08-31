@@ -4,6 +4,7 @@ import os
 import gdown
 from PIL import Image
 import numpy as np
+from tensorflow.keras.layers import Rescaling
 
 st.title("Classroom Classification AI Web App")
 
@@ -26,18 +27,27 @@ if not os.path.exists(model_path):
 model = tf.keras.models.load_model(model_path)
 st.success("Model loaded successfully!")
 
-# ✅ Make sure this matches exactly train_ds.class_names
+# ✅ Match exactly the training class names
 class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
+
+# Preprocess function
+def preprocess_image(image, target_size=(224, 224)):
+    img = image.convert('RGB').resize(target_size)
+    x = np.array(img, dtype=np.float32)
+    # Apply scaling only if the model does NOT have Rescaling
+    has_rescaling = any(isinstance(l, Rescaling) for l in model.layers)
+    if not has_rescaling:
+        x = x / 255.0
+    return np.expand_dims(x, axis=0)
 
 # Upload image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file:
-    image = Image.open(uploaded_file).convert('RGB')
+    image = Image.open(uploaded_file)
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # ✅ Preprocess image (no manual scaling here)
-    img_array = np.array(image.resize((224, 224)), dtype=np.float32)
-    img_array = np.expand_dims(img_array, axis=0)  # shape: (1,224,224,3)
+    # Preprocess
+    img_array = preprocess_image(image)
 
     # Run prediction
     prediction = model.predict(img_array)
@@ -50,4 +60,4 @@ if uploaded_file:
     # Predicted class
     pred_index = np.argmax(prediction[0])
     pred_name = class_names[pred_index]
-    st.write("Predicted class:", pred_name)
+    st.success(f"Predicted class: {pred_name}")
