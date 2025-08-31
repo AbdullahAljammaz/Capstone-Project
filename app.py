@@ -10,7 +10,7 @@ st.title("Classroom Classification AI Web App")
 # Path to save/load the model
 model_path = "models/my_custom_cnn.h5"
 
-# Google Drive direct download link (ضع هنا رابطك المباشر)
+# Google Drive direct download link 
 gdrive_url = "https://drive.google.com/uc?id=1OzRiSRs-k0L8B1dro4JyW5rjPv7Zzlnp"
 
 # Create models folder if it doesn't exist
