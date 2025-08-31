@@ -7,17 +7,19 @@ import numpy as np
 from tensorflow.keras.layers import Rescaling
 
 # ===========================
-# Set plain background color
+# Set foggy / translucent background
 # ===========================
-def set_background_color(color="#f0f0f0"):  # Change hex code to any color
+def set_foggy_background(color="white", opacity=0.7):
     st.markdown(
         f"""
         <style>
+        /* app background color */
         .stApp {{
             background-color: {color};
         }}
+        /* main panel foggy effect */
         .stApp .main {{
-            background-color: rgba(255, 255, 255, 0.85);  /* semi-transparent panel */
+            background-color: rgba(255, 255, 255, {opacity});
             padding: 20px;
             border-radius: 15px;
         }}
@@ -26,8 +28,8 @@ def set_background_color(color="#f0f0f0"):  # Change hex code to any color
         unsafe_allow_html=True
     )
 
-# Set the background color (example: light blue)
-set_background_color("#d0f0ff")
+# Apply foggy background
+set_foggy_background(color="white", opacity=0.6)  # 0.0 = fully transparent, 1.0 = solid
 
 # ===========================
 # App title
