@@ -5,31 +5,30 @@ import gdown
 from PIL import Image
 import numpy as np
 from tensorflow.keras.layers import Rescaling
+import base64
 
 # ===========================
-# Set foggy / translucent background
+# Background image function
 # ===========================
-def set_foggy_background(color="white", opacity=0.7):
+def set_background(image_file):
+    with open(image_file, "rb") as f:
+        encoded = base64.b64encode(f.read()).decode()
     st.markdown(
         f"""
         <style>
-        /* app background color */
         .stApp {{
-            background-color: {color};
-        }}
-        /* main panel foggy effect */
-        .stApp .main {{
-            background-color: rgba(255, 255, 255, {opacity});
-            padding: 20px;
-            border-radius: 15px;
+            background-image: url("data:image/jpg;base64,{encoded}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Apply foggy background
-set_foggy_background(color="white", opacity=0.6)  # 0.0 = fully transparent, 1.0 = solid
+# Add background (replace with your image in repo)
+set_background("Untitled design.png")  # <- image in the same folder as app.py
 
 # ===========================
 # App title
@@ -58,15 +57,13 @@ st.success("Model loaded successfully!")
 # ✅ Make sure this matches exactly train_ds.class_names
 class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
 
-# ===========================
-# Image uploader and prediction
-# ===========================
+# Upload image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file:
     image = Image.open(uploaded_file).convert('RGB')
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # Preprocess image
+    # ✅ Preprocess image (no manual scaling here)
     img_array = np.array(image.resize((224, 224)), dtype=np.float32)
     img_array = np.expand_dims(img_array, axis=0)  # shape: (1,224,224,3)
 
