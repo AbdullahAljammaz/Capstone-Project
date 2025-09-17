@@ -40,16 +40,36 @@ set_background("Untitled design.png")
 st.title("Classroom Classification AI Web App")
 
 # ===========================
-# Models info (2 models)
+# Models info (all your models)
 # ===========================
 models_info = {
-    "My Custom CNN": {
-        "filename": "models/my_custom_cnn.h5",
-        "gdrive_url": "https://drive.google.com/uc?id=1OzRiSRs-k0L8B1dro4JyW5rjPv7Zzlnp"
+    "ResNet50": {
+        "filename": "models/capResNet50.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1zvtYbo92sjAgtgNzfbWaTiyAwM-VWBEW"
     },
-    "CNN VGG16": {
-        "filename": "models/cnn_modelVGG16.h5",
-        "gdrive_url": "https://drive.google.com/uc?id=1nb_4h9nOzpUo9oxEvNujEL5Yw02ptB9X"
+    "ResNet101": {
+        "filename": "models/capResNet101.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1inqcxDkiiBBQAp_XIQqHNd_gb-3fmHT-"
+    },
+    "VGG16": {
+        "filename": "models/capVGG16.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1KIj20nQ68_chvNFIm2PWXzYh2GIIAJRe"
+    },
+    "VGG19": {
+        "filename": "models/capVGG19.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1ygMe8Iv92r338vImfSB2kiWgpvJyInqS"
+    },
+    "CustomCNN_3": {
+        "filename": "models/customCNN_3.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1Y77wGofPP2Lx89ZW9d8Vrv33nEsAHeNU"
+    },
+    "CustomCNN_5": {
+        "filename": "models/customCNN_5.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1J4rtV7yMpiv5ZTmca4MWLV5IdKHZNmjp"
+    },
+    "CustomCNN_7": {
+        "filename": "models/customCNN_7.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1UZ36ow9p1OycgV_zXsZpRjdcdG61pCTs"
     }
 }
 
@@ -77,9 +97,9 @@ selected_model_name = st.sidebar.selectbox("Choose a model", list(loaded_models.
 model_to_use = loaded_models[selected_model_name]
 
 # ===========================
-# Class names (adjust if needed)
+# Updated class names
 # ===========================
-class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard']
+class_names = ['Bag', 'Chair', 'Keyboard', 'Mobile', 'Monitor', 'Mouse', 'PC', 'Whitebord']
 
 # ===========================
 # Image uploader
