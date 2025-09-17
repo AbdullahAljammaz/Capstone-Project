@@ -4,7 +4,6 @@ import os
 import gdown
 from PIL import Image
 import numpy as np
-from tensorflow.keras.layers import Rescaling
 import base64
 
 # ===========================
@@ -17,65 +16,100 @@ def set_background(image_file):
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded}");
+            background-image: url("data:image/png;base64,{encoded}");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
+        }}
+        .stApp .main {{
+            background-color: rgba(255, 255, 255, 0.6);  /* semi-transparent overlay */
+            padding: 20px;
+            border-radius: 15px;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Add background (replace with your image in repo)
-set_background("Untitled design.png")  # <- image in the same folder as app.py
+# ✅ Add background (make sure file is in the same folder as app.py)
+set_background("Untitled design.png")
 
 # ===========================
 # App title
 # ===========================
 st.title("Classroom Classification AI Web App")
 
-# Path to save/load the model
-model_path = "models/my_custom_cnn.h5"
+# ===========================
+# Models info (2 models)
+# ===========================
+models_info = {
+    "My Custom CNN": {
+        "filename": "models/my_custom_cnn.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1OzRiSRs-k0L8B1dro4JyW5rjPv7Zzlnp"
+    },
+    "CNN VGG16": {
+        "filename": "models/cnn_modelVGG16.h5",
+        "gdrive_url": "https://drive.google.com/uc?id=1nb_4h9nOzpUo9oxEvNujEL5Yw02ptB9X"
+    }
+}
 
-# Google Drive direct download link
-gdrive_url = "https://drive.google.com/uc?id=1OzRiSRs-k0L8B1dro4JyW5rjPv7Zzlnp"
-
-# Create models folder if it doesn't exist
+# ===========================
+# Create models folder
+# ===========================
 os.makedirs("models", exist_ok=True)
 
-# Download model if not exists
-if not os.path.exists(model_path):
-    st.info("Downloading model, please wait...")
-    gdown.download(gdrive_url, model_path, quiet=False)
-    st.success("Model downloaded!")
+# ===========================
+# Load models
+# ===========================
+loaded_models = {}
+for name, info in models_info.items():
+    if not os.path.exists(info["filename"]):
+        st.info(f"Downloading {name} model, please wait...")
+        gdown.download(info["gdrive_url"], info["filename"], quiet=False)
+        st.success(f"{name} model downloaded!")
+    loaded_models[name] = tf.keras.models.load_model(info["filename"])
+    st.success(f"{name} model loaded successfully!")
 
-# Load the model
-model = tf.keras.models.load_model(model_path)
-st.success("Model loaded successfully!")
+# ===========================
+# Sidebar: choose model
+# ===========================
+selected_model_name = st.sidebar.selectbox("Choose a model", list(loaded_models.keys()))
+model_to_use = loaded_models[selected_model_name]
 
-# ✅ Make sure this matches exactly train_ds.class_names
-class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
+# ===========================
+# Class names (adjust if needed)
+# ===========================
+class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard']
 
-# Upload image
+# ===========================
+# Image uploader
+# ===========================
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
 if uploaded_file:
     image = Image.open(uploaded_file).convert('RGB')
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    # ✅ Preprocess image (no manual scaling here)
+    # ===========================
+    # Preprocess image
+    # ===========================
     img_array = np.array(image.resize((224, 224)), dtype=np.float32)
     img_array = np.expand_dims(img_array, axis=0)  # shape: (1,224,224,3)
 
+    # ===========================
     # Run prediction
-    prediction = model.predict(img_array)
+    # ===========================
+    prediction = model_to_use.predict(img_array)
 
+    # ===========================
     # Display raw probabilities
+    # ===========================
     st.write("Raw prediction probabilities:")
     for i, name in enumerate(class_names):
         st.write(f"{name}: {prediction[0][i]*100:.2f}%")
 
-    # Predicted class
+    # ===========================
+    # Display predicted class
+    # ===========================
     pred_index = np.argmax(prediction[0])
     pred_name = class_names[pred_index]
     st.write("Predicted class:", pred_name)
