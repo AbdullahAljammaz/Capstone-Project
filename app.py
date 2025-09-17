@@ -28,8 +28,8 @@ def set_background_image(image_path):
         unsafe_allow_html=True
     )
 
-# Use your image file in the repo
-set_background_image("classroom.jpg")
+# Use your background image file from repo
+set_background_image("Untitled design.png")
 
 # ===========================
 # App title
@@ -76,7 +76,7 @@ model_to_use = loaded_models[selected_model_name]
 # ===========================
 # Class names (adjust if needed)
 # ===========================
-class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard ']
+class_names = ['Chair', 'Keyboard', 'Monitor', 'Mouse', 'PC', 'Whiteboard']
 
 # ===========================
 # Image uploader
