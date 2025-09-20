@@ -40,7 +40,7 @@ set_background("Untitled design.png")
 st.title("Classroom Classification AI Web App")
 
 # ===========================
-# Models info (all your models)
+# Models info (only ResNet & VGG)
 # ===========================
 models_info = {
     "ResNet50": {
@@ -58,18 +58,6 @@ models_info = {
     "VGG19": {
         "filename": "models/capVGG19.h5",
         "gdrive_url": "https://drive.google.com/uc?id=1ygMe8Iv92r338vImfSB2kiWgpvJyInqS"
-    },
-    "CustomCNN_3": {
-        "filename": "models/customCNN_3.h5",
-        "gdrive_url": "https://drive.google.com/uc?id=1Y77wGofPP2Lx89ZW9d8Vrv33nEsAHeNU"
-    },
-    "CustomCNN_5": {
-        "filename": "models/customCNN_5.h5",
-        "gdrive_url": "https://drive.google.com/uc?id=1J4rtV7yMpiv5ZTmca4MWLV5IdKHZNmjp"
-    },
-    "CustomCNN_7": {
-        "filename": "models/customCNN_7.h5",
-        "gdrive_url": "https://drive.google.com/uc?id=1UZ36ow9p1OycgV_zXsZpRjdcdG61pCTs"
     }
 }
 
