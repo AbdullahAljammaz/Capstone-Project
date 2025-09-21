@@ -44,7 +44,7 @@ Achieve high accuracy in classifying classroom objects, demonstrating the feasib
 - Design: Custom background and simple UI  
 
 **Note:**  
-For more details on the dataset, see [Dataset.md](Dataset.md)
+For more details on the dataset, see [DATASET.md](DATASET.md)
 
 ---
 
