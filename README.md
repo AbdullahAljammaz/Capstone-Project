@@ -60,7 +60,7 @@ For more details on the dataset, see [DATASET.md](DATASET.md)
 - Evaluation Metric: Accuracy on validation set  
 
 **Note:**  
-For more details on the pretrained models, see [Module.md](Module.md)
+For more details on the pretrained models, see [MODULE.md](MODULE.md)
 
 ---
 
