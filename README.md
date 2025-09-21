@@ -22,7 +22,8 @@ Achieve high accuracy in classifying classroom objects, demonstrating the feasib
 
 **Dataset:**  
 - 8 object classes: PC, Monitor, Mouse, Keyboard, Whiteboard, Chair, Mobile, Bag  
-- ~425 images per class  
+- ~3,400 images (~425 per class)  
+- **Download dataset:** [![Dataset](https://img.shields.io/badge/Download-Dataset-blue?style=for-the-badge)](https://drive.google.com/drive/folders/1E8K2VCqY2ZJvqAI_A4_FkacGPF2CmR3U?usp=share_link)  
 
 **Collection:**  
 - Multiple angles, lighting, and distances to increase variety  
@@ -86,7 +87,16 @@ Achieve high accuracy in classifying classroom objects, demonstrating the feasib
 We successfully built a CNN-based system that classifies eight classroom objects with good performance, demonstrating the potential of computer vision in real-world environments.  
 
 **Future Work:**  
-- **Data:** Expand dataset with more diverse images and higher quality samples  
-- **Features:** Add object context (background filtering, multi-object handling)  
-- **Model:** Explore deeper architectures and optimize training with stronger hardware  
-- **Productization:** Deploy as a lightweight classroom tool (e.g., inventory or automation system)  
+Our future goal is to transform the current app into an interactive educational tool for young children, including those with learning difficulties, where the model can recognize classroom objects, pronounce their names, and provide interactive exercises, while gradually collecting real-world data to expand the dataset and improve classification performance for broader educational use.
+
+---
+
+## Pretrained Models
+
+The following pretrained models are used for classroom object classification.  
+You can download each model from the links below:  
+
+- **capResNet50:** [![ResNet50](https://img.shields.io/badge/Download-capResNet50-green?style=for-the-badge)](https://drive.google.com/file/d/1zvtYbo92sjAgtgNzfbWaTiyAwM-VWBEW/view?usp=share_link)  
+- **capResNet101:** [![ResNet101](https://img.shields.io/badge/Download-capResNet101-green?style=for-the-badge)](https://drive.google.com/file/d/1inqcxDkiiBBQAp_XIQqHNd_gb-3fmHT-/view?usp=share_link)  
+- **capVGG16:** [![VGG16](https://img.shields.io/badge/Download-capVGG16-green?style=for-the-badge)](https://drive.google.com/file/d/1KIj20nQ68_chvNFIm2PWXzYh2GIIAJRe/view?usp=share_link)  
+- **capVGG19:** [![VGG19](https://img.shields.io/badge/Download-capVGG19-green?style=for-the-badge)](https://drive.google.com/file/d/1ygMe8Iv92r338vImfSB2kiWgpvJyInqS/view?usp=share_link)
